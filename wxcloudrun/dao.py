@@ -3,7 +3,7 @@ import logging
 from sqlalchemy.exc import OperationalError
 
 from wxcloudrun import db
-from wxcloudrun.model import Counters
+from wxcloudrun.model import Counters, Pulser
 
 # 初始化日志
 logger = logging.getLogger('log')
@@ -21,6 +21,23 @@ def query_counterbyid(id):
         logger.info("query_counterbyid errorMsg= {} ".format(e))
         return None
 
+
+def query_pulserbyimeianduser(imei, user):
+    """
+    根据imei和user查询Pulser实体
+    """
+    try:
+        return Pulser.query.filter(Pulser.imei == imei, Pulser.user == user).first()
+    except OperationalError as e:
+        logger.info("query_counterbyid errorMsg= {} ".format(e))
+        return None
+
+def query_pulser_by_imei_user_all(imei, user, n):
+    try:
+        return Pulser.query.filter(Pulser.imei == imei, Pulser.user == user).order_by(Pulser.created_at.desc()).limit(n)
+    except OperationalError as e:
+        logger.info("query_counterbyid errorMsg= {} ".format(e))
+        return None
 
 def delete_counterbyid(id):
     """

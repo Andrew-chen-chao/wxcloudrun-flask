@@ -13,3 +13,21 @@ class Counters(db.Model):
     count = db.Column(db.Integer, default=1)
     created_at = db.Column('createdAt', db.TIMESTAMP, nullable=False, default=datetime.now())
     updated_at = db.Column('updatedAt', db.TIMESTAMP, nullable=False, default=datetime.now())
+
+
+class Pulser(db.Model):
+    __tablename__ = 'xueya'
+
+    id = db.Column(db.Integer, primary_key=True)
+    imei = db.Column(db.String(20))
+    tel = db.Column(db.String(11))
+    iccid = db.Column(db.String(20))
+    imsi = db.Column(db.String(20))
+    user = db.Column(db.Boolean)
+    sys = db.Column(db.Integer)
+    dia = db.Column(db.Integer)
+    pul = db.Column(db.Integer)
+    ano = db.Column(db.Integer)
+    created_at = db.Column('createdAt', db.TIMESTAMP, nullable=False, default=datetime.now())
+    updated_at = db.Column('updatedAt', db.TIMESTAMP, nullable=False, default=datetime.now())
+
