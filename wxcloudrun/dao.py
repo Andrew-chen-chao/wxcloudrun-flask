@@ -29,15 +29,23 @@ def query_pulserbyimeianduser(imei, user):
     try:
         return Pulser.query.filter(Pulser.imei == imei, Pulser.user == user).first()
     except OperationalError as e:
-        logger.info("query_counterbyid errorMsg= {} ".format(e))
+        logger.info("query_pulserbyimeianduser errorMsg= {} ".format(e))
         return None
 
 def query_pulser_by_imei_user_all(imei, user, n):
     try:
         return Pulser.query.filter(Pulser.imei == imei, Pulser.user == user).order_by(Pulser.created_at.desc()).limit(n)
     except OperationalError as e:
-        logger.info("query_counterbyid errorMsg= {} ".format(e))
+        logger.info("query_pulser_by_imei_user_all errorMsg= {} ".format(e))
         return None
+
+def quer_pulser_list():
+    try:
+        return Pulser.query.order_by(Pulser.created_at.desc()).limit(1000)
+    except OperationalError as e:
+        logger.info("query_pulser_list errorMsg= {} ".format(e))
+        return None
+
 
 def delete_counterbyid(id):
     """

@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import render_template, request
 from run import app
 from wxcloudrun.dao import delete_counterbyid, query_pulserbyimeianduser, \
-    query_counterbyid, insert_counter, update_counterbyid, query_pulser_by_imei_user_all
+    query_counterbyid, insert_counter, update_counterbyid, query_pulser_by_imei_user_all, quer_pulser_list
 from wxcloudrun.model import Counters, Pulser
 from wxcloudrun.response import make_succ_empty_response, \
     make_succ_response, make_err_response
@@ -96,7 +96,21 @@ def chaxunall():
         # data = {'sys':plusers.sys, 'dia':plusers.dia, 'pul':plusers.pul}
         # # return "OK %s %d %s" % (plusers.imei, plusers.user, plusers.pul)
         return make_succ_response(data)
-    
+
+@app.route("/api/list")
+def cha_xun_1000():
+    data_list = []
+    pulsers = quer_pulser_list()
+    # print(pulsers)
+    for i in pulsers:
+        # print(i.pul)
+        if i.created_at:
+            created_at = i.created_at.strftime('%Y年%m月%d日 %H:%M')
+            data = {'id': i.id, 'sys': i.sys, 'dia': i.dia, 'user': i.user, 'tel': i.tel, 'pul': i.pul, 'imei': i.imei, 'imsi': i.imsi,
+                    'iccid': i.iccid, 'ano': i.ano, 'created_at': created_at}
+            data_list.append(data)
+    return make_succ_response(data_list)
+
 @app.route('/api/count', methods=['POST'])
 def count():
     """
