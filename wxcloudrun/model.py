@@ -23,7 +23,7 @@ class Pulser(db.Model):
     tel = db.Column(db.String(11))
     iccid = db.Column(db.String(20))
     imsi = db.Column(db.String(20))
-    user = db.Column(db.Boolean)
+    user = db.Column(db.Integer)
     sys = db.Column(db.Integer)
     dia = db.Column(db.Integer)
     pul = db.Column(db.Integer)
