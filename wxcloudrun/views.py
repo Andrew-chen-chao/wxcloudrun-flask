@@ -2,7 +2,8 @@ from datetime import datetime
 from flask import render_template, request
 from run import app
 from wxcloudrun.dao import delete_counterbyid, query_pulserbyimeianduser, \
-    query_counterbyid, insert_counter, update_counterbyid, query_pulser_by_imei_user_all, quer_pulser_list
+    query_counterbyid, insert_counter, update_counterbyid, query_pulser_by_imei_user_all,\
+    quer_pulser_list, query_pulser_by_deviceid_all
 from wxcloudrun.model import Counters, Pulser, BlueTooth
 from wxcloudrun.response import make_succ_empty_response, \
     make_succ_response, make_err_response
@@ -83,6 +84,38 @@ def chaxun():
         data = {'sys':plusers.sys, 'dia':plusers.dia, 'pul':plusers.pul}
         # return "OK %s %d %s" % (plusers.imei, plusers.user, plusers.pul)
         return make_succ_response(data)
+
+@app.route('/api/chaxun_lanya_all')
+def chaxunlanyaall():
+    '''
+    根据请求的device id查询所有的数据
+    :return:
+    '''
+    device_id = request.args.get('deviceid')
+    n = request.args.get('n')
+    if device_id:
+        bluetooth = query_pulser_by_deviceid_all(device_id, n)
+        obj_list = []
+        high_press_list = []
+        low_press_list = []
+        pul_list = []
+        for i in bluetooth:
+            created_at = i.created_at.strftime('%m月%d日 %H:%M')
+            data = {'sys': i.sys, 'dia': i.dia, 'pul': i.pul, 'creat_at': created_at}
+            obj_list.append(data)
+            high_press_list.append(i.sys)
+            low_press_list.append(i.dia)
+            pul_list.append(i.pul)
+        obj_list.reverse()
+        press_min = min(low_press_list)
+        press_max = max(high_press_list)
+        pul_min = min(pul_list)
+        pul_max = max(pul_list)
+        data = {"press_min": press_min, "press_max": press_max, "pul_min": pul_min, "pul_max": pul_max, "obj_list": obj_list}
+        # data = {'sys':plusers.sys, 'dia':plusers.dia, 'pul':plusers.pul}
+        # # return "OK %s %d %s" % (plusers.imei, plusers.user, plusers.pul)
+        return make_succ_response(data)
+
 
 @app.route('/api/chaxun_all')
 def chaxunall():

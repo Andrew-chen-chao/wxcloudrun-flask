@@ -3,7 +3,7 @@ import logging
 from sqlalchemy.exc import OperationalError
 
 from wxcloudrun import db
-from wxcloudrun.model import Counters, Pulser
+from wxcloudrun.model import Counters, Pulser, BlueTooth
 
 # 初始化日志
 logger = logging.getLogger('log')
@@ -37,6 +37,13 @@ def query_pulser_by_imei_user_all(imei, user, n):
         return Pulser.query.filter(Pulser.imei == imei, Pulser.user == user).order_by(Pulser.created_at.desc()).limit(n)
     except OperationalError as e:
         logger.info("query_pulser_by_imei_user_all errorMsg= {} ".format(e))
+        return None
+
+def query_pulser_by_deviceid_all(device_id, n):
+    try:
+        return BlueTooth.query.filter(BlueTooth.deviceid == device_id).order_by(BlueTooth.created_at.desc()).limit(n)
+    except OperationalError as e:
+        logger.info("query_pulser_by_deviceid_all errorMsg= {} ".format(e))
         return None
 
 def quer_pulser_list():
