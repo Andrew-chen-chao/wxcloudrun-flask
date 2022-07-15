@@ -30,9 +30,9 @@ def jieshou_lanye():
         blue_tooth.created_at = datetime.now()
         blue_tooth.updated_at = datetime.now()
         insert_counter(blue_tooth)
-        return "OK"
+        return make_succ_response("Ok")
     else:
-        return "False"
+        return make_err_response("False")
 
 
 @app.route('/jieshou')
