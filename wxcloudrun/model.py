@@ -31,3 +31,15 @@ class Pulser(db.Model):
     created_at = db.Column('createdAt', db.TIMESTAMP, nullable=False, default=datetime.now())
     updated_at = db.Column('updatedAt', db.TIMESTAMP, nullable=False, default=datetime.now())
 
+class BlueTooth(db.Model):
+    __tablename__ = 'xueya_lanya'
+
+    id = db.Column(db.Integer, primary_key=True)
+    deviceid = db.Column(db.String(40))
+    user = db.Column(db.Integer)
+    sys = db.Column(db.Integer)
+    dia = db.Column(db.Integer)
+    pul = db.Column(db.Integer)
+    created_at = db.Column('createdAt', db.TIMESTAMP, nullable=False, default=datetime.now())
+    updated_at = db.Column('updatedAt', db.TIMESTAMP, nullable=False, default=datetime.now())
+
