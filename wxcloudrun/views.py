@@ -130,6 +130,8 @@ def chaxunlanyaall():
         # data = {'sys':plusers.sys, 'dia':plusers.dia, 'pul':plusers.pul}
         # # return "OK %s %d %s" % (plusers.imei, plusers.user, plusers.pul)
         return make_succ_response(data)
+    else:
+        return make_err_response("openid不存在")
 
 
 @app.route('/api/chaxun_all')
@@ -164,6 +166,8 @@ def chaxunall():
         # data = {'sys':plusers.sys, 'dia':plusers.dia, 'pul':plusers.pul}
         # # return "OK %s %d %s" % (plusers.imei, plusers.user, plusers.pul)
         return make_succ_response(data)
+    else:
+        return make_err_response("imei不存在")
 
 @app.route("/api/list")
 def cha_xun_1000():
