@@ -7,6 +7,8 @@ from wxcloudrun.dao import delete_counterbyid, query_pulserbyimeianduser, \
 from wxcloudrun.model import Counters, Pulser, BlueTooth
 from wxcloudrun.response import make_succ_empty_response, \
     make_succ_response, make_err_response
+from config import app_id, app_secrt
+import requests
 
 
 @app.route('/')
@@ -15,6 +17,17 @@ def index():
     :return: 返回index页面
     """
     return render_template('index.html')
+
+@app.route("/login")
+def login():
+    code = request.args.get("code")
+    print(code)
+    url = "https://api.weixin.qq.com/sns/jscode2session"
+    params = {"appid": app_id, "secret": app_secrt, "js_code": code, "grant_type": "authorization_code"}
+    res_1 = requests.get(url, params=params)
+    # print(res.json())
+    res = res_1.json()
+    return make_succ_response(res)
 
 @app.route('/jieshou_lanya')
 def jieshou_lanye():
