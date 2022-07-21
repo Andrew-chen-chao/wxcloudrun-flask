@@ -24,7 +24,7 @@ def login():
     print(code)
     url = "https://api.weixin.qq.com/sns/jscode2session"
     params = {"appid": app_id, "secret": app_secrt, "js_code": code, "grant_type": "authorization_code"}
-    res_1 = requests.get(url, params=params)
+    res_1 = requests.get(url, params=params, verify=False)
     # print(res.json())
     res = res_1.json()
     return make_succ_response(res)
