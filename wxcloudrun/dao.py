@@ -39,9 +39,9 @@ def query_pulser_by_imei_user_all(imei, user, n):
         logger.info("query_pulser_by_imei_user_all errorMsg= {} ".format(e))
         return None
 
-def query_pulser_by_deviceid_all(device_id, n):
+def query_pulser_by_openid_all(open_id, n):
     try:
-        return BlueTooth.query.filter(BlueTooth.deviceid == device_id).order_by(BlueTooth.created_at.desc()).limit(n)
+        return BlueTooth.query.filter(BlueTooth.openid == open_id).order_by(BlueTooth.created_at.desc()).limit(n)
     except OperationalError as e:
         logger.info("query_pulser_by_deviceid_all errorMsg= {} ".format(e))
         return None

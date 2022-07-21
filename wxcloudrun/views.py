@@ -3,7 +3,7 @@ from flask import render_template, request
 from run import app
 from wxcloudrun.dao import delete_counterbyid, query_pulserbyimeianduser, \
     query_counterbyid, insert_counter, update_counterbyid, query_pulser_by_imei_user_all,\
-    quer_pulser_list, query_pulser_by_deviceid_all
+    quer_pulser_list, query_pulser_by_openid_all
 from wxcloudrun.model import Counters, Pulser, BlueTooth
 from wxcloudrun.response import make_succ_empty_response, \
     make_succ_response, make_err_response
@@ -32,15 +32,17 @@ def login():
 @app.route('/jieshou_lanya')
 def jieshou_lanye():
     sys = request.args.get("sys")
+    open_id = request.args.get("openid")
     device_id = request.args.get("deviceid")
     dia = request.args.get("dia")
     pul = request.args.get("pul")
-    if device_id:
+    if open_id:
         blue_tooth = BlueTooth()
         blue_tooth.sys = sys
         blue_tooth.dia = dia
         blue_tooth.pul = pul
         blue_tooth.deviceid = device_id
+        blue_tooth.openid = open_id
         blue_tooth.created_at = datetime.now()
         blue_tooth.updated_at = datetime.now()
         insert_counter(blue_tooth)
@@ -101,13 +103,13 @@ def chaxun():
 @app.route('/api/chaxun_lanya_all')
 def chaxunlanyaall():
     '''
-    根据请求的device id查询所有的数据
+    根据请求的open id查询所有的数据
     :return:
     '''
-    device_id = request.args.get('deviceid')
+    open_id = request.args.get('openid')
     n = request.args.get('n')
-    if device_id:
-        bluetooth = query_pulser_by_deviceid_all(device_id, n)
+    if open_id:
+        bluetooth = query_pulser_by_openid_all(open_id, n)
         obj_list = []
         high_press_list = []
         low_press_list = []

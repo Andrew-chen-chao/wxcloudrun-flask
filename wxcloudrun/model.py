@@ -36,6 +36,7 @@ class BlueTooth(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     deviceid = db.Column(db.String(40))
+    openid = db.Column(db.String(40))
     user = db.Column(db.Integer)
     sys = db.Column(db.Integer)
     dia = db.Column(db.Integer)
